@@ -6,13 +6,14 @@ int input()
 {
     std::ifstream input("input.txt");
     int maximum = 0;
+    int secondMax = 0;
+    int thirdMax = 0;
     std::string current;
     int currentElfTotal = 0;
     int elf = 1;
     int maxElf = 0;
     while (getline(input, current))
     {
-        //std::cout << current << std::endl;
         if (current != "")
         {
            currentElfTotal += stoi(current);
@@ -21,16 +22,25 @@ int input()
         {
             if (currentElfTotal > maximum)
             {
+                thirdMax = secondMax;
+                secondMax = maximum;
                 maximum = currentElfTotal;
-                maxElf = elf;
-                std::cout << maximum << std::endl;
+            }
+            else if (currentElfTotal > secondMax)
+            {
+                thirdMax = secondMax;
+                secondMax = currentElfTotal;
+            }
+            else if (currentElfTotal > thirdMax)
+            {
+                thirdMax = currentElfTotal;
             }
             currentElfTotal = 0;
-            elf++;
         }
     }
     input.close();
-    std::cout << maxElf << "has ";
+    std::cout << maximum << " " << secondMax << " " << thirdMax << std::endl;
+    maximum = maximum + secondMax + thirdMax;
     return maximum;
 }
 
