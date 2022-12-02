@@ -10,9 +10,9 @@ enum leftElfOptions
 
 enum yoursElfOptions
 {
-    X = 1,
-    Y = 2,
-    Z = 3
+    X = 0, //need to lose
+    Y = 3, //need to draw
+    Z = 6 // need to
 };
 
 enum winState
@@ -29,28 +29,28 @@ int main()
     char yoursElfInput;
     leftElfOptions leftElf;
     yoursElfOptions yoursElf;
+    winState outcome;
     int score = 0;
     while (input >> leftElfInput >> yoursElfInput)
     {
         leftElf = static_cast<leftElfOptions>(leftElfInput - 'A' + 1);
-        yoursElf = static_cast<yoursElfOptions>(yoursElfInput - 'X' + 1);
-        score += yoursElf;
-        switch(leftElf - yoursElf)
+        outcome = static_cast<winState>((yoursElfInput - 'X') * 3);
+        score += outcome;
+
+        switch(outcome)
         {
-            case 0:
-                score += Draw;
+            case Draw:
+                score += leftElf;
                 break;
-            case 1:
-            case -2:
-                score += Lose;
+            case Win:
+                score += (leftElf % 3) + 1;
                 break;
-            case -1:
-            case 2:
-                score += Win;
+            case Lose:
+                score += ((leftElf + 1) % 3) + 1;
                 break;
-            default:
-                std::cout << "messed up" << std::endl;
         }
+
+        std::cout << score << std::endl;
         
     }
     std::cout << score << std::endl;
