@@ -4,7 +4,7 @@ def findPosition(char):
     else:
         return ord(char) - ord("A") + 26
 
-f = open("test.txt")
+f = open("input.txt")
 conflicts = [0] * 52
 groupItems = [0] * 52
 score = 0
@@ -12,15 +12,20 @@ lines = f.readlines()
 currentElf = 0
 for line in lines:
     modElf = (currentElf % 3) + 1
+    #print("Current Elf: ", currentElf, " modElf: ", modElf)
     for char in line.strip("\n"):
+        #print(char, " is ",groupItems[findPosition(char)])
         if groupItems[findPosition(char)] == modElf - 1:
-            groupItems[findPosition(char)] = currentElf
+            groupItems[findPosition(char)] = modElf
+        
+        #print(char, " is ",groupItems[findPosition(char)])
 
     currentElf += 1
-    for x in range(52):
-        if groupItems[x] == 3:
-            conflicts[x] += 1
-            break
+    if modElf == 3:
+        for x in range(52):
+            if groupItems[x] == 3:
+                conflicts[x] += 1
+        groupItems = [0] * 52
 
 
 for x in range(52):
