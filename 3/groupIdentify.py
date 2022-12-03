@@ -12,13 +12,9 @@ lines = f.readlines()
 currentElf = 0
 for line in lines:
     modElf = (currentElf % 3) + 1
-    #print("Current Elf: ", currentElf, " modElf: ", modElf)
     for char in line.strip("\n"):
-        #print(char, " is ",groupItems[findPosition(char)])
         if groupItems[findPosition(char)] == modElf - 1:
             groupItems[findPosition(char)] = modElf
-        
-        #print(char, " is ",groupItems[findPosition(char)])
 
     currentElf += 1
     if modElf == 3:
