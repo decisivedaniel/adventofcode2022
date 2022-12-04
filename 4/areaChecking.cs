@@ -16,12 +16,15 @@ namespace AreaChecking
                 rightBound = int.Parse(bounds[1]);
         }
 
-        public bool Contains(ElfArea other)
+        public bool ContainsAll(ElfArea other)
         {
             return (leftBound <= other.leftBound && rightBound >= other.rightBound);
         }
 
-
+        public bool ContainsSome(ElfArea other)
+        {
+            return (leftBound <= other.rightBound && rightBound >= other.leftBound);            
+        }
 
         public string Print()
         {
@@ -40,7 +43,7 @@ namespace AreaChecking
                 string[] elfs = line.Split(',');
                 var leftElf = new ElfArea(elfs[0]);
                 var rightElf = new ElfArea(elfs[1]);
-                if (leftElf.Contains(rightElf) || rightElf.Contains(leftElf))
+                if (leftElf.ContainsSome(rightElf) || rightElf.ContainsSome(leftElf))
                 {
                     fullyContainPairs++;
                 }
