@@ -1,3 +1,6 @@
+using System;
+using System.IO;
+using System.Text;
 
 namespace AreaChecking
 {
@@ -8,17 +11,17 @@ namespace AreaChecking
 
         public ElfArea(string input)
         {
-            if(input.Length == 3)
-            {
-                leftBound = int.Parse(input[0].ToString());
-                rightBound = int.Parse(input[2].ToString());
-            } 
+                var bounds = input.Split('-');
+                leftBound = int.Parse(bounds[0]);
+                rightBound = int.Parse(bounds[1]);
         }
 
         public bool Contains(ElfArea other)
         {
             return (leftBound <= other.leftBound && rightBound >= other.rightBound);
         }
+
+
 
         public string Print()
         {
@@ -30,7 +33,20 @@ namespace AreaChecking
     {
         static void Main(string[] args)
         {
-            
+            int fullyContainPairs = 0;
+            string[] lines = System.IO.File.ReadAllLines(@"./input.txt");
+            foreach (string line in lines)
+            {
+                string[] elfs = line.Split(',');
+                var leftElf = new ElfArea(elfs[0]);
+                var rightElf = new ElfArea(elfs[1]);
+                if (leftElf.Contains(rightElf) || rightElf.Contains(leftElf))
+                {
+                    fullyContainPairs++;
+                }
+            }
+
+            System.Console.WriteLine(fullyContainPairs);
         }
     }
     //mcs areaChecking.cs
